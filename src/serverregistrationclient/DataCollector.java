@@ -42,10 +42,24 @@ public class DataCollector {
                 data.server_name = s;
             }
             
+            //GET IF DOCKER IS INSTALLED
+            try {
+                p = Runtime.getRuntime().exec("docker");
+                BufferedReader br_docker = new BufferedReader(
+                    new InputStreamReader(p.getInputStream()));
+                while ((s = br_docker.readLine()) != null) {
+                    data.docker_status = "Docker_installed";
+                }
+            } catch (Exception e) {
+                data.docker_status = "No_docker_installed";
+            }
+            
+            
                 p.waitFor();
             System.out.println ("exit: " + p.exitValue());
             p.destroy();
         } catch (Exception e) {
+            System.out.println("Exeption message: ");
             System.out.println(e.getMessage());
         }
         
