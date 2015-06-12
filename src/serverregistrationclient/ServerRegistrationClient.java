@@ -16,11 +16,8 @@ public class ServerRegistrationClient {
         
         Data data = DataCollector.CollectData();
         
-        
-        //edin klas koito shte mi vrushta requesta ot type response
-        //edin klas response
-        //tozi klas response shte go izprashtam na servera
-
+        boolean isSended = DataSender.SendToServer(data);
+        System.out.println(isSended);
     }
     
 }

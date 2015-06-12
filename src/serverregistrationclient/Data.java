@@ -10,5 +10,7 @@ package serverregistrationclient;
  * @author Ivan
  */
 public class Data {
-    public String IP;
+    public String server_name;
+    public String server_ip;
+    public String docker_status = "notReady";
 }
