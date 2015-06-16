@@ -23,7 +23,7 @@ public class DataSender {
     public static boolean SendToServer(Data data){
         
         try {
-            String url = "http://145.24.222.146:8000/serverName="+data.server_name+"&ip="+data.server_ip+"&dockerStatus="+data.docker_status+"";
+            String url = "http://145.24.222.146:4567/addServer/"+data.server_name+"/"+data.server_ip+"/"+data.docker_status+"";
 
 		URL obj = new URL(url);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();

@@ -26,12 +26,14 @@ public class DataCollector {
         try {
             //GET IP ADDRESS
             p = Runtime.getRuntime().exec(new String[] { 
-                "bash", "-c", "/sbin/ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'"
+                "bash", "-c", "ifconfig -a  | grep inet | sed 's/inet addr://g' | sed 's/inet6 addr: //g'  | grep -v 'Host' | awk '{print $1}' | grep -v 127.0.0.1"
             });
             BufferedReader br_ip = new BufferedReader(
                 new InputStreamReader(p.getInputStream()));
+            String result = "";
             while ((s = br_ip.readLine()) != null) {
-                data.server_ip = s;
+                result += s + ", ";
+                data.server_ip = result;
             }
             
             //GET HOST NAME

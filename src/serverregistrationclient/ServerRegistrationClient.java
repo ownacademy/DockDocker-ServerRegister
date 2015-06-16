@@ -14,8 +14,9 @@ public class ServerRegistrationClient {
 
     public static void main(String[] args) {
         
+        //TO DO: check eventureel voor java version
         Data data = DataCollector.CollectData();
-
+        
         boolean isSended = DataSender.SendToServer(data);
         
         if(isSended == true){
