@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package serverregistrationclient;
 
 
@@ -20,7 +15,7 @@ public class ServerRegistrationClient {
         boolean isSended = DataSender.SendToServer(data);
         
         if(isSended == true){
-            System.out.println("Your request has been sended to Docker server register application");
+            System.out.println("Your request has been sended to DockDocker server managment");
         } else {
             System.out.println("Somethings goes wrong");
         }

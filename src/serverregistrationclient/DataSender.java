@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package serverregistrationclient;
 
 import java.io.BufferedReader;
@@ -23,7 +18,8 @@ public class DataSender {
     public static boolean SendToServer(Data data){
         
         try {
-            String url = "http://145.24.222.146:4567/addServer/"+data.server_name+"/"+data.server_ip+"/"+data.docker_status+"";
+            String new_serve_ip = data.server_ip.replace("/", "{slash}");
+            String url = "http://localhost:4567/addServer/"+data.server_name+"/"+new_serve_ip+"/"+data.docker_status+"";
 
 		URL obj = new URL(url);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
