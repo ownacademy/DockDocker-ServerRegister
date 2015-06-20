@@ -18,8 +18,18 @@ public class DataSender {
     public static boolean SendToServer(Data data){
         
         try {
-            String new_serve_ip = data.server_ip.replace("/", "{slash}");
-            String url = "http://localhost:4567/addServer/"+data.server_name+"/"+new_serve_ip+"/"+data.docker_status+"";
+            String username = replaceStringToASCII(data.username);
+            String password = replaceStringToASCII(data.password);
+            String server_name = replaceStringToASCII(data.server_name);
+            String server_ip = replaceStringToASCII(data.server_ip);
+            String docker_status = replaceStringToASCII(data.docker_status);
+            
+            String url = "http://localhost:4567/s_addServer/"+
+                    username+"/"+
+                    password+"/"+
+                    server_name+"/"+
+                    server_ip+"/"+
+                    docker_status;
 
 		URL obj = new URL(url);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
@@ -53,5 +63,14 @@ public class DataSender {
             return false;
         }
 
+    }
+    
+    private static String replaceStringToASCII(String value){
+        return value.
+                replace(", ", "%7Bcomma%7D").
+                replace("/", "%7Bslash%7D").
+                replace(", ", "{comma}").
+                replace("/", "{slash}").
+                replace(" ", "%20");
     }
 }

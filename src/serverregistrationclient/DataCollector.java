@@ -3,6 +3,7 @@ package serverregistrationclient;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.Scanner;
 
 /**
  *
@@ -12,13 +13,30 @@ public class DataCollector {
     
     public static Data CollectData(){
         Data data = new Data();
+        Scanner scan = new Scanner(System.in);
+        String password = null;
         
-        // /sbin/ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'         145.24.222.146
-        // "bash", "-c", "/sbin/ifconfig | awk 'NR==2{print$2}' | sed 's/addr://g'"             172.17.42.1
+        while (password == null) {
+            System.out.println("Please enter password: ");
+            password = scan.nextLine();
+        }
+        scan.close(); 
+        data.password = password;
 
         String s;
         Process p;
         try {
+            
+            //GET USERNAME
+            p = Runtime.getRuntime().exec(new String[] { 
+                "bash", "-c", "echo $USER"
+            });
+            BufferedReader br_username = new BufferedReader(
+                new InputStreamReader(p.getInputStream()));
+            while ((s = br_username.readLine()) != null) {
+                data.username = s;
+            }
+            
             //GET IP ADDRESS
             p = Runtime.getRuntime().exec(new String[] { 
                 "bash", "-c", "ifconfig -a  | grep inet | sed 's/inet addr://g' | sed 's/inet6 addr: //g'  | grep -v 'Host' | awk '{print $1}' | grep -v 127.0.0.1"
@@ -27,7 +45,7 @@ public class DataCollector {
                 new InputStreamReader(p.getInputStream()));
             String result = "";
             while ((s = br_ip.readLine()) != null) {
-                result += s + "{comma}";
+                result += s + ", ";
                 data.server_ip = result;
             }
             
