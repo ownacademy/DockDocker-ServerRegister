@@ -16,7 +16,7 @@ public class DataCollector {
         Scanner scan = new Scanner(System.in);
         String password = null;
         
-        while (password == null) {
+        while (password == null || password == "") {
             System.out.println("Please enter password: ");
             password = scan.nextLine();
         }
