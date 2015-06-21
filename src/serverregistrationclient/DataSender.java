@@ -16,7 +16,7 @@ public class DataSender {
     private static String USER_AGENT = "Mozilla/5.0";
     
     public static boolean SendToServer(Data data){
-        
+        HttpURLConnection con = null;
         try {
             String username = replaceStringToASCII(data.username);
             String password = replaceStringToASCII(data.password);
@@ -24,7 +24,7 @@ public class DataSender {
             String server_ip = replaceStringToASCII(data.server_ip);
             String docker_status = replaceStringToASCII(data.docker_status);
             
-            String url = "http://localhost:4567/s_addServer/"+
+            String url = "http://localhost:5100/s_addServer/"+
                     username+"/"+
                     password+"/"+
                     server_name+"/"+
@@ -32,7 +32,7 @@ public class DataSender {
                     docker_status;
 
 		URL obj = new URL(url);
-		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+		con = (HttpURLConnection) obj.openConnection();
  
 		// optional default is GET
 		con.setRequestMethod("GET");
@@ -44,23 +44,31 @@ public class DataSender {
 		System.out.println("\nSending 'GET' request to URL : " + url);
 		System.out.println("Response Code : " + responseCode);
  
-		BufferedReader in = new BufferedReader(
-		        new InputStreamReader(con.getInputStream()));
-		String inputLine;
-		StringBuffer response = new StringBuffer();
- 
-		while ((inputLine = in.readLine()) != null) {
-			response.append(inputLine);
-		}
-		in.close();
- 
-		//print result
-		System.out.println(response.toString());
-            
+                if(responseCode == 200) {
+                    BufferedReader in = new BufferedReader(
+                            new InputStreamReader(con.getInputStream()));
+                    String inputLine;
+                    StringBuffer responseReader = new StringBuffer();
+
+                    while ((inputLine = in.readLine()) != null) {
+                            responseReader.append(inputLine);
+                    }
+                    in.close();
+
+                    //print result
+                    System.out.println(responseReader.toString());              
+                } else if(responseCode == 404) {
+                    System.out.println("Error 404: DockDocker Server Managment not found");
+                } else {
+                    System.out.println("Unable to send request to DockDocker Server Managment");
+                } 
+
             return true;
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return false;
+        } finally {
+            con.disconnect();
         }
 
     }
