@@ -7,10 +7,13 @@ import java.util.Scanner;
 
 /**
  *
- * @author Ivan
+ * @author Ivan Ivanov
  */
 public class DataCollector {
-    
+    /**
+     * Collects the needed data from the computer.
+     * @return Data object with the computers data.
+     */
     public static Data CollectData(){
         Data data = new Data();
         Scanner scan = new Scanner(System.in);

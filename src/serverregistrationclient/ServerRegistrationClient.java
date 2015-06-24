@@ -4,7 +4,7 @@ package serverregistrationclient;
 
 /**
  *
- * @author Ivan
+ * @author Ivan Ivanov
  */
 public class ServerRegistrationClient {
     

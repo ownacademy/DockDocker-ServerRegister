@@ -9,12 +9,17 @@ import javax.net.ssl.HttpsURLConnection;
 
 /**
  *
- * @author Ivan
+ * @author Ivan Ivanov
  */
 public class DataSender {
     
     private static String USER_AGENT = "Mozilla/5.0";
     
+    /**
+     * Sends Data object to the server to be written into the database.
+     * @param data Data object to be sent.
+     * @return true if the operation is successful.
+     */
     public static boolean SendToServer(Data data){
         HttpURLConnection con = null;
         try {
@@ -24,7 +29,7 @@ public class DataSender {
             String server_ip = replaceStringToASCII(data.server_ip);
             String docker_status = replaceStringToASCII(data.docker_status);
             
-            String url = "http://localhost:5100/s_addServer/"+
+            String url = "http://localhost:5100/fromRegApp/"+
                     username+"/"+
                     password+"/"+
                     server_name+"/"+
@@ -73,6 +78,11 @@ public class DataSender {
 
     }
     
+    /**
+     * Replace string characters so does not break the GET request.
+     * @param value String to be converted.
+     * @return The converted string.
+     */
     private static String replaceStringToASCII(String value){
         return value.
                 replace(", ", "%7Bcomma%7D").

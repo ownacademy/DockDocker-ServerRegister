@@ -2,7 +2,7 @@ package serverregistrationclient;
 
 /**
  *
- * @author Ivan
+ * @author Ivan Ivanov
  */
 public class Data {
     public String username;
